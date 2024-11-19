@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import {
   Authenticator,
   Button,
@@ -32,24 +33,35 @@ export default function App() {
     });
   }, []);
 
-  async function createExpense(event) {
+
+  async function createResident(event) {
     event.preventDefault();
     const form = new FormData(event.target);
 
-    await client.models.Expense.create({
+    await client.models.Resident.create({
       name: form.get("name"),
-      amount: form.get("amount"),
+      apartment_no: form.get("apartment_no"),
+      move_in_date: form.get("move_in_date"),
+      mobile_phone: form.get("mobile_phone"),
+      parking_no: form.get("parking_no"),
+      vehicle_rego: form.get("vehicle_rego"),
+      pet_type: form.get("pet_type"),
+      pet_weight: form.get("pet_weight"),
+      storage_no: form.get("storage_no"),
+      re_name: form.get("re_name"),
+      re_mobile: form.get("re_mobile"),
+      re_email: form.get("re_email"),
     });
 
     event.target.reset();
   }
 
-  async function deleteExpense({ id }) {
-    const toBeDeletedExpense = {
+  async function deleteResident({ id }) {
+    const toBeDeletedResident = {
       id,
     };
 
-    await client.models.Expense.delete(toBeDeletedExpense);
+    await client.models.Resident.delete(toBeDeletedResident);
   }
 
   return (
@@ -63,8 +75,8 @@ export default function App() {
           width="70%"
           margin="0 auto"
         >
-          <Heading level={1}>Expense Tracker</Heading>
-          <View as="form" margin="3rem 0" onSubmit={createExpense}>
+          <Heading level={1}>Resident Tracker</Heading>
+          <View as="form" margin="3rem 0" onSubmit={createResident}>
             <Flex
               direction="column"
               justifyContent="center"
@@ -73,62 +85,119 @@ export default function App() {
             >
               <TextField
                 name="name"
-                placeholder="Expense Name"
-                label="Expense Name"
+                placeholder="
+                Name"
+                label="Name"
                 labelHidden
                 variation="quiet"
                 required
               />
               <TextField
-                name="amount"
-                placeholder="Expense Amount"
-                label="Expense Amount"
-                type="float"
+                name="apartment_no"
+                placeholder="Apartment Number"
+                label="Apartment Number"
+                type="string"
                 labelHidden
                 variation="quiet"
                 required
               />
-
-              <Button type="submit" variation="primary">
-                Create Expense
+              <TextField
+                name="move_in_date"
+                placeholder="Move In Date"
+                label="Move In Date"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+              <TextField
+                name="mobile_phone"
+                placeholder="Mobile Phone"
+                label="Mobile Phone"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+              <TextField
+                name="parking_no"
+                placeholder="Parking Number"
+                label="Parking Number"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+              <TextField
+                name="vehicle_rego"
+                placeholder="Vehicle Registration"
+                label="Vehicle Registration"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+              <TextField
+                name="pet_type"
+                placeholder="Pet Type"
+                label="Pet Type"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+               <TextField
+                name="pet_weight"
+                placeholder="Pet weight"
+                label="Pet Weight"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+               <TextField
+                name="storage_no"
+                placeholder="Storage number"
+                label="Storage number"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+               <TextField
+                name="re_name"
+                placeholder="Agents Name"
+                label="Agents Name"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+               <TextField
+                name="re_mobile"
+                placeholder="Agents Mobile"
+                label="Agents Mobile"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+               <TextField
+                name="re_email"
+                placeholder="Agents Email"
+                label="Agents Email"
+                type="string"
+                labelHidden
+                variation="quiet"
+                required
+              />
+             <Button type="submit" variation="primary">
+                Submit
               </Button>
             </Flex>
           </View>
           <Divider />
-          <Heading level={2}>Expenses</Heading>
-          <Grid
-            margin="3rem 0"
-            autoFlow="column"
-            justifyContent="center"
-            gap="2rem"
-            alignContent="center"
-          >
-            {expenses.map((expense) => (
-              <Flex
-                key={expense.id || expense.name}
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                gap="2rem"
-                border="1px solid #ccc"
-                padding="2rem"
-                borderRadius="5%"
-                className="box"
-              >
-                <View>
-                  <Heading level="3">{expense.name}</Heading>
-                </View>
-                <Text fontStyle="italic">${expense.amount}</Text>
-
-                <Button
-                  variation="destructive"
-                  onClick={() => deleteExpense(expense)}
-                >
-                  Delete note
-                </Button>
-              </Flex>
-            ))}
-          </Grid>
+         
           <Button onClick={signOut}>Sign Out</Button>
         </Flex>
       )}
