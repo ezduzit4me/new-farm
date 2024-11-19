@@ -25,13 +25,7 @@ const client = generateClient({
 });
 
 export default function App() {
-  const [expenses, setExpenses] = useState([]);
-
-  useEffect(() => {
-    client.models.Expense.observeQuery().subscribe({
-      next: (data) => setExpenses([...data.items]),
-    });
-  }, []);
+  
 
 
   async function createResident(event) {
@@ -56,13 +50,7 @@ export default function App() {
     event.target.reset();
   }
 
-  async function deleteResident({ id }) {
-    const toBeDeletedResident = {
-      id,
-    };
-
-    await client.models.Resident.delete(toBeDeletedResident);
-  }
+  
 
   return (
     <Authenticator>
@@ -75,7 +63,7 @@ export default function App() {
           width="70%"
           margin="0 auto"
         >
-          <Heading level={1}>Resident Tracker</Heading>
+          <Heading level={1}>Resident Details</Heading>
           <View as="form" margin="3rem 0" onSubmit={createResident}>
             <Flex
               direction="column"
@@ -85,9 +73,9 @@ export default function App() {
             >
               <TextField
                 name="name"
-                placeholder="
-                Name"
+                placeholder="Name"
                 label="Name"
+                type="string"
                 labelHidden
                 variation="quiet"
                 required
